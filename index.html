@@ -12,8 +12,9 @@
 	<div id="root"></div>
 </body>
 
-<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
 
@@ -24,7 +25,7 @@
 	// ---------------
 
 
-	function Btn({ text, changeValue, big }){
+	function Btn({ text, changeValue, fontSize = 10 }){
 		console.log(text)
 		return (
 			<button
@@ -35,8 +36,9 @@
 					padding: "10px 20px",
 					border: 0,  
 					borderRadius:10,
+					fontSize: fontSize,
 					// 인자가 big 이라면 : big이 아니라면
-					fontSize: big ? 18 : 10,
+					// fontSize: big ? 18 : 10,
 				}}
 					>
 				{text}
@@ -44,8 +46,18 @@
 		);
 	}
 
+
 	// 내가 원하는 이름 = React.memo / React Memorize기능 (Btn)안에 있는 것중에 바뀌는 것이 없다면 새로 렌더링 하지 않음
 	const MemorizedBtn = React.memo(Btn);
+
+
+	// React는 인자값을 어떤걸 주길 원하는지 알 수 없기 때문에 아무 값을 넣어도 오류가 뜨지 않지만 이 기능을 추가한다면 기준을 정할수 있다. 만약 타입을 number로 했는데 string을 넣는다면 console창에 오류가 나옴
+	MemorizedBtn.propTypes = {
+		// 인자 : PropTypes.원하는 타입.isRequired(필수적인 요소 / 없으면 에러 뜸)
+		text: PropTypes.string.isRequired,
+		fontSize: PropTypes.number,
+	}
+
 	function App () {
 		// [기존 값, 값을 변경할 때 사용하는 함수] = React.useState(기존 값에 들어갈 데이터)
 		const [value, setValue] = React.useState("Save Changes")
@@ -55,8 +67,8 @@
 		// <Btn 안에 인자를 적어서 텍스트 변경, 다양한 옵션 추가 등이 가능하다>
 		return ( 
 			<div>
-				<MemorizedBtn text={value} changeValue={changeValue} big={true} />
-				<MemorizedBtn text="Continue" big={false} />
+				<MemorizedBtn text={value} fontSize={18} changeValue={changeValue}/>
+				<MemorizedBtn text="Continue" />
 			</div> 
 		);
 	};
