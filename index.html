@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>React-btn-props</title>
+</head>
+
+<body>
+	<div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+	
+	// 이런 방법도 있음
+	// Btn(내가 정한 인자) {return (<button>{앞에 정한 인자.<Btn /> 안에 정한 이름>}</button>) }
+	// function Btn(props) {return (<button>{props.text}</button>) }
+
+	// ---------------
+
+
+	function Btn({ text, big }){
+		console.log(text, big)
+		return (
+			<button
+				style={{
+					backgroundColor: "tomato",
+					color:"white",
+					padding: "10px 20px",
+					border: 0,  
+					borderRadius:10,
+					// 인자가 big 이라면 : big이 아니라면
+					fontSize: big ? 18 : 10,
+				}}
+					>
+				{text}
+			</button>
+		);
+	}
+
+
+	function App () {
+
+		// <Btn 안에 인자를 적어서 텍스트 변경, 다양한 옵션 추가 등이 가능하다>
+		return ( 
+			<div>
+				<Btn text="Save Changes" big={true} />
+				<Btn text="Continue" big={false} />
+			</div> 
+		);
+	};
+
+	const root = document.getElementById("root")
+	ReactDOM.render(<App />, root);
+</script>
+
+</html>
