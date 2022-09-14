@@ -24,7 +24,8 @@
 	// ---------------
 
 
-	function Btn({ text, changeValue }){
+	function Btn({ text, changeValue, big }){
+		console.log(text)
 		return (
 			<button
 				onClick={changeValue}
@@ -44,7 +45,7 @@
 	}
 
 	// 내가 원하는 이름 = React.memo / React Memorize기능 (Btn)안에 있는 것중에 바뀌는 것이 없다면 새로 렌더링 하지 않음
-	const MemorizedBtn = React.memo(Btn)
+	const MemorizedBtn = React.memo(Btn);
 	function App () {
 		// [기존 값, 값을 변경할 때 사용하는 함수] = React.useState(기존 값에 들어갈 데이터)
 		const [value, setValue] = React.useState("Save Changes")
