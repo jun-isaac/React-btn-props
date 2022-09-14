@@ -16,7 +16,7 @@
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-	
+
 	// 이런 방법도 있음
 	// Btn(내가 정한 인자) {return (<button>{앞에 정한 인자.<Btn /> 안에 정한 이름>}</button>) }
 	// function Btn(props) {return (<button>{props.text}</button>) }
@@ -24,10 +24,10 @@
 	// ---------------
 
 
-	function Btn({ text, big }){
-		console.log(text, big)
+	function Btn({ text, changeValue }){
 		return (
 			<button
+				onClick={changeValue}
 				style={{
 					backgroundColor: "tomato",
 					color:"white",
@@ -43,14 +43,19 @@
 		);
 	}
 
-
+	// 내가 원하는 이름 = React.memo / React Memorize기능 (Btn)안에 있는 것중에 바뀌는 것이 없다면 새로 렌더링 하지 않음
+	const MemorizedBtn = React.memo(Btn)
 	function App () {
-
+		// [기존 값, 값을 변경할 때 사용하는 함수] = React.useState(기존 값에 들어갈 데이터)
+		const [value, setValue] = React.useState("Save Changes")
+		// 값을 변경할 떄 사용하는 함수(변경될 데이터)
+		const changeValue = () => setValue("Revert Changes")
+		
 		// <Btn 안에 인자를 적어서 텍스트 변경, 다양한 옵션 추가 등이 가능하다>
 		return ( 
 			<div>
-				<Btn text="Save Changes" big={true} />
-				<Btn text="Continue" big={false} />
+				<MemorizedBtn text={value} changeValue={changeValue} big={true} />
+				<MemorizedBtn text="Continue" big={false} />
 			</div> 
 		);
 	};
